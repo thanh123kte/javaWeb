@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import dao.DAO;
 
-
 /**
- * Servlet implementation class RegisterControl
+ * Servlet implementation class UpdateControl
  */
-@WebServlet("/register")
-public class RegisterControl extends HttpServlet {
+@WebServlet("/update")
+public class UpdateControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterControl() {
+    public UpdateControl() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,30 +40,18 @@ public class RegisterControl extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		
-		String account = request.getParameter("user");
-		String pass = request.getParameter("pass");
-		String repass = request.getParameter("repass");
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		int phone = Integer.parseInt(request.getParameter("phone"));
 		String address = request.getParameter("address");
+		int uid = Integer.parseInt(request.getParameter("id"));
 		
+		DAO dao = new DAO();
+		dao.editProfile(fullname, email, phone, address, uid);
+		
+		request.getRequestDispatcher("profile?uid="+uid).forward(request, response);
 
 		
-		if(pass.equals(repass)) {
-			DAO dao = new DAO();
-			boolean isRegistered = dao.register(account, pass, fullname, email, phone, address);
-			System.out.println(isRegistered);
-			if(!isRegistered) {
-				request.setAttribute("mess", "Account already existed");
-				request.getRequestDispatcher("Register.jsp").forward(request, response);
-			}else {
-				request.getRequestDispatcher("Login.jsp").forward(request, response);
-			}
-		}else {
-			request.setAttribute("mess", "Password are not the same");
-			request.getRequestDispatcher("Register.jsp").forward(request, response);
-		}
 		
 	}
 

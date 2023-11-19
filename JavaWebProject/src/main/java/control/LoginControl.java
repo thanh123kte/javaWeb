@@ -50,6 +50,7 @@ public class LoginControl extends HttpServlet {
 		 if(a.getPermission() == 2) {
 			 HttpSession session = request.getSession();
 			 session.setAttribute("acc", a);
+			 session.setAttribute("pass", pass);
 			 request.getRequestDispatcher("home").forward(request, response);
 		}else if(a.getPermission() == 1) {
 			request.getRequestDispatcher("dashboard.jsp").forward(request, response);

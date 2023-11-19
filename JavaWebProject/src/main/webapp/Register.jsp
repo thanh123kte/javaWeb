@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
@@ -38,11 +38,27 @@
               </div>
               <div class="form-group last mb-3">
                 <label style="font-size: 20px; font-weight: bold" for="password">Password</label>
-                <input name="pass" type="password" class="form-control" placeholder="Your Password" autocomplete="off" required="required" id="password">
+                <input name="pass" type="password" class="form-control" placeholder="Your Password" autocomplete="off" required="required">
               </div>
               <div class="form-group last mb-3">
                 <label style="font-size: 20px; font-weight: bold" for="password">Re-password</label>
-                <input name="repass" type="password" class="form-control" placeholder="Retype Your Password" autocomplete="off" required="required" id="password">
+                <input name="repass" type="password" class="form-control" placeholder="Retype Your Password" autocomplete="off" required="required" >
+              </div>
+              <div class="form-group last mb-3">
+                <label style="font-size: 20px; font-weight: bold" for="password">Full name</label>
+                <input name="fullname" type="text" class="form-control" placeholder="Type your full name" autocomplete="off" required="required" >
+              </div>
+              <div class="form-group last mb-3">
+                <label style="font-size: 20px; font-weight: bold" for="password">Email</label>
+					<input name="email" type="email" pattern=".+@(gmail\.com|vku\.udn\.vn)" size="30" class="form-control" placeholder="Type your email" autocomplete="off" required="required">
+              </div>
+              <div class="form-group last mb-3">
+                <label style="font-size: 20px; font-weight: bold" for="password">Phone number</label>
+                <input name="phone" type="text" class="form-control" placeholder="Type your phone number" autocomplete="off" required="required" >
+              </div>
+              <div class="form-group last mb-3">
+                <label style="font-size: 20px; font-weight: bold" for="password">Address</label>
+                <input name="address" type="text" class="form-control" placeholder="Type your address" autocomplete="off" required="required" >
               </div>
               	
 				<p style="margin-top: 10%" class="text-danger">${mess}</p>

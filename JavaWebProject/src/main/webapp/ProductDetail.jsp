@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
@@ -34,199 +33,83 @@
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
+    
+    <script>
+    function addToCart() {
+        // Kiểm tra xem sessionScope.acc có tồn tại không
+        var isUserLoggedIn = ${not empty sessionScope.acc};
+
+        // Nếu không tồn tại, hiển thị thông báo và không thực hiện thêm vào giỏ hàng
+        if (!isUserLoggedIn) {
+            alert("Vui lòng đăng nhập.");
+        } else {
+            // Lấy giá trị quantity từ ô nhập số
+            var quantity = document.getElementById("quantity").value;
+
+            // Lấy giá trị pid và uid từ biến của bạn (thay thế bằng giá trị thực tế)
+            var pid = "${detail.id}";
+            var uid = "${sessionScope.acc.id}";
+
+            // Tạo URL với các tham số
+            var addToCartURL = "addtocart?pid=" + pid + "&uid=" + uid + "&quantity=" + quantity;
+
+            // Chuyển hướng đến URL
+            window.location.href = addToCartURL;
+        }
+    }
+</script>
+    
 </head>
 
 <body>
-  <div class="hero_area">
-    <!-- header section strats -->
-    <jsp:include page="Menu.jsp"></jsp:include>
-    <!-- end header section -->
-    <!-- slider section -->
+  <jsp:include page="Menu.jsp"></jsp:include>
+  
+  	<div style="margin-top: 100px; max-width: 70%" class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div style="align-items: flex-start;" class="wrapper row">
+					<div  style="flex: 70%" class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img style="max-width: 100%; max-height: 100%" src="${detail.image }" /></div>
 
-    <section class="slider_section">
-      <div class="slider_container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-7">
-                    <div class="detail-box">
-                      <h1>
-                        Welcome To Our <br>
-                        Gift Shop
-                      </h1>
-                      <p>
-                        Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
-                      </p>
-                      <a href="">
-                        Contact Us
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-5 ">
-                    <div class="img-box">
-                      <img src="images/slider-img.png" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item ">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-7">
-                    <div class="detail-box">
-                      <h1>
-                        Welcome To Our <br>
-                        Gift Shop
-                      </h1>
-                      <a href="">
-                        Contact Us
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-5 ">
-                    <div class="img-box">
-                      <img src="images/slider-img.png" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item ">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-7">
-                    <div class="detail-box">
-                      <h1>
-                        Welcome To Our <br>
-                        Gift Shop
-                      </h1>
-                      <p>
-                      </p>
-                      <a href="">
-                        Contact Us
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-5 ">
-                    <div class="img-box">
-                      <img src="images/slider-img.png" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel_btn-box" style=" left: 45%;">
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-              <i class="fa fa-arrow-left" aria-hidden="true"></i>
-              <span class="sr-only">Previous</span>
-            </a>
-            <img src="images/line.png" alt="" />
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+						</div>
+						
+					</div>
+					<div style="display: flex; flex-wrap: wrap; flex: 30% " class="details col-md-6">
+						<h3 style="font-weight: bold; float: left; width: 100%; margin-top: 20px; text-align: center;" class="product-title">${detail.name }</h3>
+				
+						<p style="float: left; width: 100%; text-align: center;" class="product-description">${detail.decs }</p>
+						<div style=" width: 100%">
+							<h5 style="float: left; text-align: center;" class="price">Price: <span>${detail.price} $</span></h3>
+							<label style="float: right;margin-right: 30%" for="quantity">Quantity:
+							<input type="number" id="quantity" name="quantity" min="1" max="100" value="1">
+							</label>
+						</div>
+						
+						
 
-    <!-- end slider section -->
-  </div>
-  <!-- end hero area -->
-
-  <!-- shop section -->
-
-  <section id="shop" class="shop_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Latest Products
-        </h2>
-      </div>
-      <div class="row">
-      	<c:forEach items="${listP}" var="product" begin="0" end="7">
-		    <div class="col-sm-6 col-md-4 col-lg-3">
-		        <div class="box">
-		            <a href="detail?pid=${product.id}">
-		                <div class="img-box">
-		                    <img src="${product.image}" alt="Product Image">
-		                </div>
-		                <div class="detail-box">
-		                    <h6>
-		                       ${product.name}
-		                    </h6>
-		                    <h6>
-		                        Price
-		                        <span>
-		                            $ ${product.price}
-		                        </span>
-		                    </h6>
-		                </div>
-		                <div class="new">
-		                    <span>
-		                        New
-		                    </span>
-		                </div>
-		            </a>
-		        </div>
-		    </div>
-		</c:forEach>
-      </div>
-      <div class="btn-box">
-        <a href="allproduct">
-          View All Products
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- end shop section -->
-
-  <!-- saving section -->
-
-  <section class="saving_section ">
-    <div class="box">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="img-box">
-              <img src="images/saving-img.png" alt="">
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="detail-box">
-              <div class="heading_container">
-                <h2>
-                  Best Savings on <br>
-                  new arrivals
-                </h2>
-              </div>
-              <p>
-                Qui ex dolore at repellat, quia neque doloribus omnis adipisci, ipsum eos odio fugit ut eveniet blanditiis praesentium totam non nostrum dignissimos nihil eius facere et eaque. Qui, animi obcaecati.
-              </p>
-              <div class="btn-box">
-                <a href="#" class="btn1">
-                  Buy Now
-                </a>
-                <a href="#" class="btn2">
-                  See More
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end saving section -->
-
-  <!-- why section -->
-
+						<div style="text-align: center; width: 100%; margin-bottom: 20px" class="action">
+    						<button style="background-color: #f9ece6;
+    						 border: none; padding: 10px 10px 10px 10px;
+    						  border-radius: 12px" type="button" onclick="addToCart()">
+    						  Add to Cart
+    						  </button>
+						</div>
+						<c:if test="${addToCartResult == false}">
+							<div class="alert alert-warning" role="alert">
+							        Bạn đã thêm sản phẩm này vào giỏ hàng trước đó.
+							</div>
+						</c:if>
+						    
+		
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
   <section id="why" class="why_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
@@ -473,176 +356,7 @@
       </div>
     </div>
   </section>
-
-  <!-- end why section -->
-
-
-  <!-- gift section -->
-
-  <section class="gift_section layout_padding-bottom">
-    <div class="box ">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-5">
-            <div class="img_container">
-              <div class="img-box">
-                <img src="images/gifts.png" alt="">
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7">
-            <div class="detail-box">
-              <div class="heading_container">
-                <h2>
-                  Gifts for your <br>
-                  loved ones
-                </h2>
-              </div>
-              <p>
-              </p>
-              <div class="btn-box">
-                <a href="#" class="btn1">
-                  Buy Now
-                </a>
-                <a href="#" class="btn2">
-                  See More
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- end gift section -->
-
-
-  <!-- contact section -->
-
-  <section id="map" class="contact_section ">
-    <div class="container px-0">
-      <div class="heading_container ">
-        <h2 class="">
-          Contact Us
-        </h2>
-      </div>
-    </div>
-    <div class="container container-bg">
-      <div class="row">
-        <div class="col-lg-7 col-md-6 px-0">
-          <div class="map_container">
-            <div class="map-responsive">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.5523231113017!2d108.25018731482127!3d15.97570974479897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x87dd2cfe64044695!2sUniversity%20of%20Danang%20-%20University%20of%20Science%20and%20Technology!5e0!3m2!1sen!2suk!4v10" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
-            <div>
-              <input type="text" placeholder="Name" />
-            </div>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="text" placeholder="Phone" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Message" />
-            </div>
-            <div class="d-flex ">
-              <button>
-                SEND
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end contact section -->
-
-
-  <!-- info section -->
-
-  <section class="info_section  layout_padding2-top">
-    <div class="social_container">
-      <div class="social_box">
-        <a href="">
-          <i class="fa fa-facebook" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-twitter" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-instagram" aria-hidden="true"></i>
-        </a>
-        <a href="">
-          <i class="fa fa-youtube" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-    <div class="info_container ">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-3">
-            <h6>
-              ABOUT US
-            </h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
-            </p>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="info_form ">
-              <h5>
-                Newsletter
-              </h5>
-              <form action="#">
-                <input type="email" placeholder="Enter your email">
-                <button>
-                  Subscribe
-                </button>
-              </form>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <h6>
-              NEED HELP
-            </h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet, consectetur adipiscing elit, sed doLorem ipsum dolor sit amet,
-            </p>
-          </div>
-          <div class="col-md-6 col-lg-3">
-            <h6>
-              CONTACT US
-            </h6>
-            <div class="info_link-box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span> Gb road 123 london Uk </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>+01 12345678901</span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span> demo@gmail.com</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- footer section -->
-    <jsp:include page="Footer.jsp"></jsp:include>
-
-  </section>
+  <jsp:include page="Footer.jsp"></jsp:include>
   
   <!-- custom script -->
   <script>
@@ -700,13 +414,8 @@
 	  });
 	});
   </script>
+  
  
-  
-
-<!-- JavaScript -->
-
-  
-
   <!-- end info section -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
   <script src="js/jquery-3.4.1.min.js"></script>
@@ -718,3 +427,4 @@
 </body>
 
 </html>
+  
