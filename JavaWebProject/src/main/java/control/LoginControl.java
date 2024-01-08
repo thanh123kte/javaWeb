@@ -47,13 +47,18 @@ public class LoginControl extends HttpServlet {
 		String pass = request.getParameter("pass");
 		DAO dao = new DAO();
 		Account a = dao.login(account, pass);
+		System.out.println("ac:"+a.getAccount());
+		System.out.println("pass:"+a.getPass());
+		System.out.println("per:"+a.getPermission());
+		HttpSession session = request.getSession();
 		 if(a.getPermission() == 2) {
-			 HttpSession session = request.getSession();
+			 
 			 session.setAttribute("acc", a);
 			 session.setAttribute("pass", pass);
-			 request.getRequestDispatcher("home").forward(request, response);
+			 response.sendRedirect("home");
 		}else if(a.getPermission() == 1) {
-			request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+			session.setAttribute("acc", a);
+			response.sendRedirect("dashboard");
 		}else {
 			request.setAttribute("mess", "<div class=\"alert alert-danger\" role=\"alert\">\r\n"
 					+ "  Wrong password or username.\r\n"

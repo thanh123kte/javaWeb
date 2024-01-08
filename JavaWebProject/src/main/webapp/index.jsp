@@ -153,7 +153,7 @@
 		        <div class="box">
 		            <a href="detail?pid=${product.id}">
 		                <div class="img-box">
-		                    <img src="${product.image}" alt="Product Image">
+		                    <img src="uploads/${product.image}" alt="Product Image">
 		                </div>
 		                <div class="detail-box">
 		                    <h6>

@@ -134,7 +134,7 @@
 	
 	                    <div class="d-flex align-items-start border-bottom pb-3">
 	                        <div class="me-4">
-	                            <img src="${product.image }" alt="" class="avatar-lg rounded">
+	                            <img src="uploads/${product.image }" alt="" class="avatar-lg rounded">
 	                        </div>
 	                        <div class="flex-grow-1 align-self-center overflow-hidden">
 	                            <div >

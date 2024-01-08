@@ -37,7 +37,7 @@ public class ChangePassControl extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("uid"));
 		DAO dao = new DAO();
 		dao.changePass(npass,id);
-		
+		response.sendRedirect("Login.jsp");
 		}
 
 	/**

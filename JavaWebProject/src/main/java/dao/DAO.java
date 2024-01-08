@@ -11,16 +11,21 @@ import java.util.List;
 import context.DBcontext;
 import entity.Account;
 import entity.Cart;
+import entity.Order;
+import entity.Order_details;
 import entity.Product;
 
 public class DAO {
 	public Connection conn = null;
 	public PreparedStatement ps = null;
 	public ResultSet rs = null;
+	
 	public Account login(String user, String pass) {
 		String sql = "Select * from tbl_user where user_account=? and user_pass=?";
 		DAO dao = new DAO();
 		try {
+			System.out.println("usse:"+user);
+			System.out.println("pass: "+pass+" "+dao.toMD5(pass));
 			conn = new DBcontext().getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, user);
@@ -77,6 +82,7 @@ public class DAO {
 			ps.setString(1, dao.toMD5(pass));
 			ps.setInt(2, user_id);
 			ps.executeUpdate();
+			System.out.println("ok");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -101,6 +107,7 @@ public class DAO {
 	}
 	
 	public Account getAccount(int userid) {
+		
 		String sql = "Select * from tbl_user where user_id=?";
 		try {
 			conn = new DBcontext().getConnection();
@@ -123,6 +130,32 @@ public class DAO {
 			// TODO: handle exception
 		}
 		return null;
+	}
+	
+public Account getUserAccount(int userid) {
+		Account a = new Account();
+		String sql = "Select * from tbl_user where user_id=?";
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userid);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				return new Account(rs.getInt("user_id"), 
+						rs.getString("user_account"), 
+						rs.getString("user_pass"), 
+						rs.getInt("user_permission"),
+						rs.getString("user_name"),
+						rs.getString("user_email"),
+						rs.getInt("user_phone"),
+						rs.getString("user_address")
+						);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return a;
 	}
 	
 	
@@ -355,8 +388,163 @@ public class DAO {
 		return list;
 	}
 	
+	public boolean addProduct(String name, String decs, String image, Double price) {
+		String sql = "INSERT INTO tbl_product (product_name, product_decs, prduct_type, product_image, product_price) VALUES (?, ?, 1, ?, ?) ";
+		
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setString(2, decs);
+			ps.setString(3, image);
+			ps.setDouble(4, price);
+			
+			int rowsAffected = ps.executeUpdate();
+			 if (rowsAffected > 0) {
+				 	return true;
+			    }		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return false;
+	}
+	
+	
 	public static void main(String[] args) {
 		DAO dao = new DAO();
 
+	}
+
+	public void deleteProduct(int id) {
+		String sql = "DELETE FROM tbl_product WHERE product_id=?";
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	public void updateProduct(int id, String name, String decs, String filename, double price) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE tbl_product SET product_name = ?, product_decs = ?, product_image = ?, product_price = ? WHERE product_id = ?";
+		try {
+			DAO dao = new DAO();
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, name);
+			ps.setString(2, decs);
+			ps.setString(3, filename);
+			ps.setDouble(4, price);
+			ps.setInt(5, id);
+			System.out.println(ps);
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	public List<Order> getOrder() {
+		
+		List<Order> list = new ArrayList<Order>();
+		
+		String sql = "SELECT * FROM tbl_order";
+		
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);	
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Order(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getString(3),
+						rs.getString(4)
+						));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+			
+		return list;
+	}
+
+	public void acceptOrder(int id) {
+		// TODO Auto-generated method stub
+
+		String sql = "UPDATE tbl_order SET order_status = ? WHERE order_id = ?";
+		
+		try {
+			DAO dao = new DAO();
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, "Đã duyệt");
+			ps.setInt(2, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void deleteOrder(int id) {
+		String sql = "DELETE FROM tbl_order WHERE order_id=?";
+		
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+	public void deleteOrderDetails(int order_code) {
+		String sql = "DELETE FROM tbl_order_details WHERE order_code=?";
+		
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, order_code);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	public List<Order_details> getOrderDetails(int code) {
+		List<Order_details> list = new ArrayList<Order_details>();
+		String sql = "SELECT tbl_product.product_id, tbl_order_details.quantity, tbl_product.product_name, tbl_product.product_image, tbl_product.product_price, tbl_order_details.user_id FROM tbl_order_details INNER JOIN tbl_product ON tbl_order_details.product_id = tbl_product.product_id WHERE tbl_order_details.order_code = ?";
+		
+		try {
+			conn = new DBcontext().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, code);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Order_details(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getDouble(5),
+						rs.getInt(6)
+						));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+			
+		return list;
+		
 	}
 }

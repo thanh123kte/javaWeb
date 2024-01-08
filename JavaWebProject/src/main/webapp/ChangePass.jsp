@@ -66,7 +66,7 @@
         var uid = ${sessionScope.acc.id};
         if (opassValue == "${sessionScope.pass}") {
             if (opassValue != npassValue) {
-                window.location.href = "changepass?opass=" + opassValue + "&uid=" + uid;
+                window.location.href = "changepass?npass=" + npassValue + "&uid=" + uid;
             } else {
                 alert("Mật khẩu mới không được trùng với mật khẩu trước đó");
             }

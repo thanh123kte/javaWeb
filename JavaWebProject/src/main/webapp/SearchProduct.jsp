@@ -48,9 +48,9 @@
       	<c:forEach items="${listP}" var="product" >
 		    <div class="col-sm-6 col-md-4 col-lg-3">
 		        <div class="box">
-		            <a href="">
+		            <a href="detail?pid=${product.id }">
 		                <div class="img-box">
-		                    <img src="${product.image}" alt="Product Image">
+		                    <img src="uploads/${product.image}" alt="Product Image">
 		                </div>
 		                <div class="detail-box">
 		                    <h6>

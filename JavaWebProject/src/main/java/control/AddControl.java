@@ -36,7 +36,6 @@ public class AddControl extends HttpServlet {
 		int uid = Integer.parseInt(request.getParameter("uid"));
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
 		
-		dao.addToCart(uid, proid, quantity);
 		boolean addToCartResult = dao.addToCart(uid, proid, quantity);
 		request.setAttribute("addToCartResult", addToCartResult);
 		request.getRequestDispatcher("detail?pid=" + proid).forward(request, response);

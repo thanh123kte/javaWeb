@@ -71,7 +71,7 @@
 					<div  style="flex: 70%" class="preview col-md-6">
 						
 						<div class="preview-pic tab-content">
-						  <div class="tab-pane active" id="pic-1"><img style="max-width: 100%; max-height: 100%" src="${detail.image }" /></div>
+						  <div class="tab-pane active" id="pic-1"><img style="max-width: 100%; max-height: 100%" src="uploads/${detail.image }" /></div>
 
 						</div>
 						

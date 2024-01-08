@@ -123,7 +123,7 @@
 	        </div>
 	        <div class="row">
 	              <div class="col-sm-9">
-	              	<input type="submit" value="Register" class="btn btn-block btn-primary">
+	              	<input type="submit" value="Save" class="btn btn-block btn-primary">
 	              </div>
 	            </div>
 	        <hr>
